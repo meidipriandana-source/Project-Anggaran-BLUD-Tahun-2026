@@ -416,20 +416,20 @@ export default function App() {
                     <table className="w-full text-left border-collapse min-w-[1000px]">
                       <thead>
                         <tr className="bg-white/5">
-                          <th className="p-6 text-[10px] font-black text-indigo-300 uppercase tracking-widest border-b border-white/5 w-1/4">Uraian</th>
-                          <th className="p-6 text-[10px] font-black text-indigo-300 uppercase tracking-widest border-b border-white/5 whitespace-nowrap">Rencana</th>
+                          <th className="p-6 text-xs md:text-sm font-black text-indigo-300 uppercase tracking-widest border-b border-white/5 w-1/4">Uraian</th>
+                          <th className="p-6 text-xs md:text-sm font-black text-indigo-300 uppercase tracking-widest border-b border-white/5 whitespace-nowrap">Rencana</th>
                           {MONTHS.map(m => (
-                            <th key={m} className="p-4 text-[10px] font-black text-indigo-300 uppercase tracking-widest border-b border-white/5 text-center">{m.slice(0, 3)}</th>
+                            <th key={m} className="p-4 text-xs md:text-sm font-black text-indigo-300 uppercase tracking-widest border-b border-white/5 text-center">{m.slice(0, 3)}</th>
                           ))}
-                          <th className="p-6 text-[10px] font-black text-indigo-300 uppercase tracking-widest border-b border-white/5 text-right">Real.</th>
-                          <th className="p-6 text-[10px] font-black text-indigo-300 uppercase tracking-widest border-b border-white/5 text-right">Sisa</th>
+                          <th className="p-6 text-xs md:text-sm font-black text-indigo-300 uppercase tracking-widest border-b border-white/5 text-right">Real.</th>
+                          <th className="p-6 text-xs md:text-sm font-black text-indigo-300 uppercase tracking-widest border-b border-white/5 text-right">Sisa</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5">
                         {BUDGET_GROUPS.map(group => (
                           <React.Fragment key={group.id}>
                             <tr className="bg-white/[0.02]">
-                              <td colSpan={16} className="p-6 text-xs font-semibold text-slate-100 italic opacity-80">{group.name}</td>
+                              <td colSpan={16} className="p-6 text-sm md:text-base font-semibold text-slate-100 italic opacity-80">{group.name}</td>
                             </tr>
                             {group.items.map(item => {
                               const months = itemizedRealization[item.key] || new Array(12).fill(0);
@@ -440,8 +440,8 @@ export default function App() {
                               
                               return (
                                 <tr key={item.id} className="hover:bg-white/5 transition-colors group">
-                                  <td className="p-6 text-xs font-light text-slate-300 break-words max-w-[200px]">{item.desc}</td>
-                                  <td className="p-6 text-xs font-medium text-slate-500 whitespace-nowrap">
+                                  <td className="p-6 text-sm md:text-base font-light text-slate-300 break-words max-w-sm leading-relaxed">{item.desc}</td>
+                                  <td className="p-6 text-sm md:text-base font-medium text-slate-500 whitespace-nowrap">
                                     <div className="flex items-center gap-2 group/input">
                                       <div className="relative">
                                         <input
@@ -453,7 +453,7 @@ export default function App() {
                                             setCustomPlanned(prev => ({ ...prev, [item.id]: val }));
                                           }}
                                           className={cn(
-                                            "bg-transparent border-none focus:ring-0 p-0 text-xs font-bold w-24 transition-all",
+                                            "bg-transparent border-none focus:ring-0 p-0 text-sm md:text-base font-bold w-28 transition-all",
                                             isLocked ? "text-slate-500 opacity-60 cursor-not-allowed" : "text-indigo-400 focus:text-indigo-300 border-b border-indigo-500/30 border-dashed"
                                           )}
                                         />
@@ -472,12 +472,12 @@ export default function App() {
                                     </div>
                                   </td>
                                   {months.map((val, i) => (
-                                    <td key={i} className={cn("px-2 py-6 text-[10px] text-center font-mono", val > 0 ? "text-indigo-400 font-bold" : "text-slate-700")}>
+                                    <td key={i} className={cn("px-4 py-6 text-xs md:text-sm text-center font-mono", val > 0 ? "text-indigo-400 font-bold" : "text-slate-700")}>
                                       {val > 0 ? formatNumber(val) : '—'}
                                     </td>
                                   ))}
-                                  <td className="p-6 text-xs font-medium text-right text-white whitespace-nowrap">{formatNumber(total)}</td>
-                                  <td className={cn("p-6 text-xs font-bold text-right whitespace-nowrap", sisa < 0 ? "text-rose-400" : "text-emerald-400")}>
+                                  <td className="p-6 text-sm md:text-base font-medium text-right text-white whitespace-nowrap">{formatNumber(total)}</td>
+                                  <td className={cn("p-6 text-sm md:text-base font-bold text-right whitespace-nowrap", sisa < 0 ? "text-rose-400" : "text-emerald-400")}>
                                     {formatNumber(sisa)}
                                   </td>
                                 </tr>
@@ -713,10 +713,11 @@ function DataEntryView({ category, data, onUpdate }: {
                   </td>
                   <td className="p-3 md:p-4">
                     <textarea 
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-3 md:px-4 py-2 md:py-3 text-sm text-white focus:bg-white/10 focus:border-indigo-500 focus:ring-0 transition-all resize-none h-11 md:h-12"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-3 md:px-4 py-3 md:py-4 text-sm md:text-base text-white focus:bg-white/10 focus:border-indigo-500 focus:ring-0 transition-all resize-y min-h-[100px] leading-relaxed"
                       placeholder="Deskripsi..."
                       value={entry.uraian}
                       onChange={e => updateRow(entry.id, 'uraian', e.target.value)}
+                      rows={3}
                     />
                   </td>
                   <td className="p-3 md:p-4">
